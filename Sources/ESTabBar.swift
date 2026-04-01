@@ -195,6 +195,10 @@ internal extension ESTabBar /* Layout */ {
             } .sorted { (subview1, subview2) -> Bool in
                 return subview1.frame.origin.x < subview2.frame.origin.x
         }
+
+        guard tabBarButtons.count >= tabBarItems.count else {
+            return
+        }
         
         if isCustomizing {
             for (idx, _) in tabBarItems.enumerated() {
