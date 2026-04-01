@@ -188,13 +188,16 @@ internal extension ESTabBar /* Layout */ {
         }
         
         let tabBarButtons = subviews.filter { subview -> Bool in
-            // `UITabBarButton` is a private UIKit class and can break on newer iOS versions.
-            if let cls = NSClassFromString("UIControl") {
-                return subview.isKind(of: cls) && !(subview is ESTabBarItemContainer)
+            if let cls = NSClassFromString("UITabBarButton") {
+                return subview.isKind(of: cls)
             }
             return false
             } .sorted { (subview1, subview2) -> Bool in
                 return subview1.frame.origin.x < subview2.frame.origin.x
+        }
+
+        guard tabBarButtons.count >= tabBarItems.count else {
+            return
         }
         
         if isCustomizing {
